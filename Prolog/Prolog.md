@@ -18,4 +18,9 @@ The knowledge base is kept pretty slim. It consist out of three different predic
 | cost | number |  |
 
 ## Lists
-in [ExampleList.pd](ExampleList.pd), I provided a possibility to dynamically apply a filter. this can be used to 
+in [ExampleList.pd](ExampleList.pl), I provided a possibility to dynamically apply a filter. this can be used to create conjunction or diconjunction with dynamic use.
+I created to conjunctions to filter: `input/3` and `sub_input/3`. `input/3` uses itself and `sub_input/3` to apply said filters.
+
+The user enters different filters as showcased later to perform an action. I created two implementations of the starting predicate `input/3`. The second predicate is used as the start. I used two head-tail decompositions to take the first item of the provided lists (head) and apply a `sub_input/3` on it. The tail is again passed to a `input/3`. To handle he recursion, the first predicate `input/3` was implemented. This is a base case and terminates the action. To directly find all car models, which match the filter criteria, I used the function `findall`. this provides a list of matches as the searching result.
+
+To handle the different datatypes of the properties, i created four implementations  of `sub_input/3`. the first two predicates again use the head-tail decomposition due to the ability of extras being a list. They check whether a filtered extra is in the car.
