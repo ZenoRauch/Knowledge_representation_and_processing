@@ -19,14 +19,17 @@ sub_input(ID, Input, Value):-
     ExplValue = Value.
 
 % input/3 [ID, list(PROPERTY), list(PROPERTYVALUE)]
-input(_,[],[]).
-input(Models, [Property|Next_property],[Propertyvalue|Next_propertyvalue]):-
+input(Models, Properties, PropertyValues):-
     findall(
-        [Brand,Model],
+        [Brand, Model],
         (
-        	is_model(Brand, Model, ID),
-    		sub_input(ID, Property, Propertyvalue),
-    		input(ID, Next_property, Next_propertyvalue)
+            is_model(Brand, Model, ID),
+            check_all_properties(ID, Properties, PropertyValues)
         ),
         Models).
 
+check_all_properties(_, [], []).
+
+check_all_properties(ID, [Property|RestProps], [Value|RestValues]):-
+    sub_input(ID, Property, Value),
+    check_all_properties(ID, RestProps, RestValues).
